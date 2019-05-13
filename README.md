@@ -1,2 +1,2 @@
-# DS-Android-Studio-2nd-Lab
+# DS-Android-Studio-3rd-Lab
 Project for the course "Κατανεμημένα Συστήματα" | CS - AUEB
