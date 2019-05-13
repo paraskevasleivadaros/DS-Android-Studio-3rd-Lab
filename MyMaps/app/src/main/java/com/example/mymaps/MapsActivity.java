@@ -2,6 +2,8 @@ package com.example.mymaps;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,9 +59,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             markers.add(mMap.addMarker(markerOptions));
             i++;
         }
+
+        for(Marker m : markers){
+            m.setTag(i);
+            i++;
+        }
+
+
         LatLng athens = new LatLng(37.994129, 23.731960);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(athens));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+
+        final Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                for(Marker m : markers){
+                    m.setVisible(!m.isVisible());
+                }
+                if(markers.get(0).isVisible()){
+                    button.setText("Hide");
+                }else{
+                    button.setText("Hidden");
+                }
+            }
+        });
 
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
