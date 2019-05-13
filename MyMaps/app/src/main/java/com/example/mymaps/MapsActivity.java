@@ -1,11 +1,13 @@
 package com.example.mymaps;
 
-import android.support.v4.app.FragmentActivity;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -46,21 +48,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        latlngs.add(new LatLng(37.994129,23.731960));
-        latlngs.add(new LatLng(37.9757,23.7339));
+        latlngs.add(new LatLng(37.994129, 23.731960));
+        latlngs.add(new LatLng(37.9757, 23.7339));
 
-        int i=1;
-        for (LatLng point : latlngs){
+        int i = 1;
+        for (LatLng point : latlngs) {
             markerOptions.position(point);
-            markerOptions.title("POI"+i);
+            markerOptions.title("POI" + i);
 
             markerOptions.snippet("test");
-
             markers.add(mMap.addMarker(markerOptions));
             i++;
         }
-
-        for(Marker m : markers){
+        i = 1;
+        for (Marker m : markers) {
             m.setTag(i);
             i++;
         }
@@ -75,16 +76,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
 
-                for(Marker m : markers){
-                    m.setVisible(!m.isVisible());
+                for (Marker m : markers) {
+                    if (m.getTag().equals(1)) {
+                        m.setVisible(!m.isVisible());
+                    }
                 }
-                if(markers.get(0).isVisible()){
+                if (markers.get(0).isVisible()) {
                     button.setText("Hide");
-                }else{
+                } else {
                     button.setText("Hidden");
                 }
             }
         });
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setTrafficEnabled(true);
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
