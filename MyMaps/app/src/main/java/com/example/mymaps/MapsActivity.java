@@ -103,7 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-        // Add a marker in Sydney and move the camera
+        //Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         //Marker m = mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //m.setRotation((float)5);
